@@ -20,7 +20,7 @@ def get_cache_filename(url, reset=False):
     return filename
 
 
-def find_new_ads(url):
+def find_new_ads(url, reset_cache=False):
     """
     Extracts a list of new ads at the URL in *url*.
     """
@@ -29,7 +29,7 @@ def find_new_ads(url):
     if not response.ok:
         raise click.ClickException("couldn't get search result page")
 
-    cache_file = get_cache_filename(url)
+    cache_file = get_cache_filename(url, reset=reset_cache)
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
