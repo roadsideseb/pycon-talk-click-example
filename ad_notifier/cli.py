@@ -1,6 +1,6 @@
 import click
 
-from .pinkbike import find_ads
+from .pinkbike import find_new_ads
 
 
 @click.command()
@@ -8,6 +8,6 @@ from .pinkbike import find_ads
 def main(url):
     print('Processing URL:', url)
 
-    new_ads = find_ads(url)
+    new_ads = find_new_ads(url)
 
     print('Found {} ads!'.format(len(new_ads)))
