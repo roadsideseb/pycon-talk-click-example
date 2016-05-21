@@ -1,6 +1,13 @@
 import click
 
+from .pinkbike import find_ads
+
 
 @click.command()
-def main():
-    print('I am the ad_notifier CLI')
+@click.argument('url')
+def main(url):
+    print('Processing URL:', url)
+
+    new_ads = find_ads(url)
+
+    print('Found {} ads!'.format(len(new_ads)))
