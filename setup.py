@@ -4,7 +4,13 @@ import sys
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
-requires = ['click', 'requests', 'beautifulsoup4', 'envelopes', 'dj-email-url']
+requires = ['click',
+            'requests',
+            'beautifulsoup4',
+            'envelopes',
+            'dj-email-url',
+            'schedule']
+
 tests_require = ['pytest', 'pytest-cache', 'pytest-cov']
 
 
