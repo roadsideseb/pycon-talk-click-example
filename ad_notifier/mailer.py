@@ -3,6 +3,13 @@ import dj_email_url
 from envelopes import Envelope
 
 
+def ads_as_list(ads):
+    content = []
+    for ad in ads:
+        content.append('* {ad.id} - {ad.title} - {ad.url}\n\n'.format(ad=ad))
+    return ''.join(content)
+
+
 def send_email(to, subject, content):
     email_config = dj_email_url.config()
 

@@ -1,7 +1,7 @@
 import click
 
 from .pinkbike import find_new_ads
-from .mailer import send_email
+from .mailer import send_email, ads_as_list
 
 
 @click.command()
@@ -18,4 +18,4 @@ def main(url, email, reset_cache):
     if email and new_ads:
         send_email(email,
                    subject='New ads available',
-                   content='Found {} new ads for {}'.format(len(new_ads), url))
+                   content=ads_as_list(new_ads))
