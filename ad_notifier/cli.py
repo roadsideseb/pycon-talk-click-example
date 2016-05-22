@@ -32,7 +32,8 @@ def process_url(url, email, reset_cache):
 @click.group()
 @click.option('--url', envvar='PINKBIKE_URL',
               help='the pinkbike search URL to process')
-@click.option('--email', help='email to send notifications to')
+@click.option('--email', envvar='EMAIL_ADDRESS',
+              help='email to send notifications to')
 @click.option('--reset-cache', default=False, is_flag=True,
               help='reset the internal ads cache')
 @click.pass_context
