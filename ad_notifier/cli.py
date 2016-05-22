@@ -7,16 +7,26 @@ from .mailer import send_email, ads_as_list
 
 
 def process_url(url, email, reset_cache):
-    print('Processing URL:', url)
+    click.echo('Processing URL: {}'.format(url[:30]))
+
+    if reset_cache:
+        click.secho('Resetting ad cache 🔥.', fg='yellow')
 
     new_ads = find_new_ads(url, reset_cache)
 
-    print('Found {} ads!'.format(len(new_ads)))
+    if new_ads:
+        click.secho('Found {} new ads 🎉'.format(len(new_ads)), fg='green')
+    else:
+        click.secho('No new ads 😢.', fg='red')
 
     if email and new_ads:
         send_email(email,
                    subject='New ads available',
                    content=ads_as_list(new_ads))
+
+        click.secho('Sent email to {} 📮 '.format(email), fg='green')
+    else:
+        click.secho('No notification sent 💤.', fg='red')
 
 
 @click.group()
@@ -51,7 +61,7 @@ def run_periodically(context, run_every):
     """
     Run scheduler to check for new ads periodically.
     """
-    print('Running as scheduled job, every {} minute(s)'.format(run_every))
+    click.echo('Running as scheduled job, every {} minute(s)'.format(run_every))
 
     schedule.every(run_every).minutes.do(process_url, **context.obj)
 
