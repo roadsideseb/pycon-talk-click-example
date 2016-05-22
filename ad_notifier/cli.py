@@ -20,31 +20,29 @@ def process_url(url, email, reset_cache):
 
 
 @click.group()
-def main():
-    pass
-
-
-@main.command()
 @click.argument('url')
 @click.option('--email')
 @click.option('--reset-cache', default=False, is_flag=True)
-def run_once(url, email, reset_cache):
-    process_url(url, email, reset_cache)
+@click.pass_context
+def main(context, url, email, reset_cache):
+    context.obj = {'url': url,
+                   'email': email,
+                   'reset_cache': reset_cache}
 
 
 @main.command()
-@click.argument('url')
-@click.option('--email')
-@click.option('--reset-cache', default=False, is_flag=True)
+@click.pass_context
+def run_once(context):
+    process_url(**context.obj)
+
+
+@main.command()
 @click.option('--run-every', default=5, type=int)
-def run_periodically(url, email, reset_cache, run_every):
-    print('Running as scheduled job, every {} minutes'.format(run_every))
+@click.pass_context
+def run_periodically(context, run_every):
+    print('Running as scheduled job, every {} minute(s)'.format(run_every))
 
-    schedule.every(run_every).minutes.do(
-        process_url,
-        url=url,
-        email=email,
-        reset_cache=reset_cache)
+    schedule.every(run_every).minutes.do(process_url, **context.obj)
 
     while True:
         schedule.run_pending()
