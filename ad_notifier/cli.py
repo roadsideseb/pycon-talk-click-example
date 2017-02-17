@@ -7,7 +7,7 @@ from .mailer import send_email, ads_as_list
 
 
 def process_url(url, email, reset_cache):
-    click.echo('Processing URL: {}'.format(url[:30]))
+    click.echo('Processing URL: {}'.format(url))
 
     if reset_cache:
         click.secho('Resetting ad cache 🔥.', fg='yellow')
